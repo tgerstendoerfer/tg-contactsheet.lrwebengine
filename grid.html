@@ -1,0 +1,91 @@
+<%
+--[[ Define some variables to make locating other resources easier
+     firstPage was defined in our manifest.]]
+
+    local others = "content"
+    local theRoot = "."
+    local mySize = "thumb"
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="de">
+<head>
+
+<% --[[ HTML page metadata and stylesheets ]] %>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+<meta name="generator" content="Adobe Photoshop Lightroom" >
+<title>$model.metadata.event.value - $model.metadata.clubName.value - $model.metadata.date.value</title>
+<link rel="stylesheet" type="text/css" media="screen" href="resources/default.css" >
+
+</head>
+
+<% --[[ The main HTML page begins here ]] %>
+<body>
+
+<%
+	local function fixUrlIfRelative( url )
+		url = tostring( url ) or ""
+		if string.find( url, "[a-z]+:" ) then
+			-- this url starts with something like http: or mailto:, so leave it alone
+		else
+			-- this url is probably relative, so we need to tack on theRoot to the beginning
+			-- of it, so no matter where the page we're currently viewing is placed in the 
+			-- output hierarchy, this link will still point to the same page
+			url = theRoot .. "/" .. url;
+		end
+		return url
+	end
+%>
+
+<% --[[ Page header titles ]] %>
+<h1>$model.metadata.event.value
+  &#150; <span id="metadata.clubName.value">$model.metadata.clubName.value</span>
+  &#150; <span id="metadata.date.value">$model.metadata.date.value</span>
+</h1>
+<p id="metadata.groupDescription.value">$model.metadata.groupDescription.value</p>
+
+<% --[[ Pagination section ]] %>
+<% if numGridPages > 1 then %>
+  <p class="navlinks">
+    <lr:Pagination>
+      <lr:CurrentPage>
+        <span class="current">$page</span> |
+      </lr:CurrentPage>
+      <lr:OtherPages>
+        <a href="$link">$page</a> |
+      </lr:OtherPages>
+      <lr:PreviousEnabled>
+        <a href="$link"><%= LOC "$$$/AgWPG/Templates/HTML/output/Previous=Zur&uuml;ck" %></a> |
+      </lr:PreviousEnabled>
+      <lr:PreviousDisabled>
+        <%= LOC "$$$/AgWPG/Templates/HTML/output/Previous=Zur&uuml;ck" %> |
+      </lr:PreviousDisabled>
+      <lr:NextEnabled>
+        <a href="$link"><%= LOC "$$$/AgWPG/Templates/HTML/output/Next=Weiter" %></a>
+      </lr:NextEnabled>
+      <lr:NextDisabled>
+        <%= LOC "$$$/AgWPG/Templates/HTML/output/Next=Weiter" %>
+      </lr:NextDisabled>
+    </lr:Pagination>
+  </p>
+<% end %>
+
+<lr:ThumbnailGrid>
+  <lr:GridPhotoCell>
+  	<a href="$others/bin/images/large/<%= image.exportFilename %>.jpg"
+  		title="$image.metadata.title"
+        ><img src="$others/bin/images/thumb/<%= image.exportFilename %>.jpg"
+              id="ID<%= image.imageID %>_thumb"
+              width="$image.renditions.thumb.width"
+              height="$image.renditions.thumb.height"
+              alt="$image.metadata.title" /></a>
+  </lr:GridPhotoCell>
+</lr:ThumbnailGrid>
+
+<div style="clear:both"></div>
+
+<p class="footer">&copy; <%= os.date("%Y") %> Thomas Gerstendörfer. Alle Rechte vorbehalten. Verwendung dieser Bilder nur mit ausdr&uuml;cklicher schriftlicher Zustimmung des Fotografen. Bei&nbsp;Fragen:&nbsp;<a href="mailto:thomas@gerstendoerfer.com">thomas@gerstendoerfer.com</a></p>
+
+</body>
+</html>

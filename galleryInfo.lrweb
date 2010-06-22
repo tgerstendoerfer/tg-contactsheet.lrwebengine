@@ -1,0 +1,413 @@
+return {
+        LrSdkVersion = 1.3,
+        LrSdkMinimumVersion = 1.3, -- minimum SDK version required by this plugin
+
+    title = LOC "$$$/GalleryName/Title=TG Contact Sheet",
+    id = "com.gerstendoerfer.contactsheet",
+	galleryType = "lua",
+	maximumGallerySize = 50000,
+	model = {
+		["agmSizes.large.cropMode"] = "normal",
+		["agmSizes.large.height"] = function() return agmSizes.large.width end,
+		["agmSizes.large.maxHeight"] = 2701,
+		["agmSizes.large.maxWidth"] = 2701,
+		["agmSizes.large.metadataExportMode"] = function() return agmSizes.thumb.metadataExportMode end,
+		["agmSizes.large.width"] = 500,
+		["agmSizes.thumb.cropMode"] = "normal",
+		["agmSizes.thumb.height"] = 150,
+		["agmSizes.thumb.metadataExportMode"] = "copyright",
+		["agmSizes.thumb.width"] = 150,
+		["nonCSS.frameHeight"] = function() return agmSizes.thumb.height + 10 end,
+		["nonCSS.frameWidth"] = function() return agmSizes.thumb.width + 10 end,
+		["agmSizes.tracking"] = false,
+		["appearance.body.background-color"] = "#ffffff",
+		["appearance.body.cssID"] = "body",
+		["appearance.borderBottom.border-bottom"] = function()
+			return string.format( "1px solid %s", AgColorToWebColor( nonCSS.cellBorderColor ) ) 
+		end,
+		["appearance.borderBottom.cssID"] = ".borderBottom",
+		["appearance.borderBottomRight.border-bottom"] = function()
+			return string.format( "1px solid %s", AgColorToWebColor( nonCSS.cellBorderColor ) ) 
+		end,
+		["appearance.borderBottomRight.border-right"] = function()
+			return string.format( "1px solid %s", AgColorToWebColor( nonCSS.cellBorderColor ) ) 
+		end,
+		["appearance.borderBottomRight.cssID"] = ".borderBottomRight",
+		["appearance.borderRight.border-right"] = function()
+			return string.format( "1px solid %s", AgColorToWebColor( nonCSS.cellBorderColor ) ) 
+		end,
+		["appearance.borderRight.cssID"] = ".borderRight",
+		["appearance.borderRightDotted.border-right"] = function()
+			return string.format( "1px dotted %s", AgColorToWebColor( nonCSS.cellBorderColor ) ) 
+		end,
+		["appearance.borderRightDotted.cssID"] = ".borderRightDotted",
+		["appearance.borderTopLeft.border-left"] = function()
+			return string.format( "1px solid %s", AgColorToWebColor( nonCSS.cellBorderColor ) ) 
+		end,
+		["appearance.borderTopLeft.border-top"] = function()
+			return string.format( "1px solid %s", AgColorToWebColor( nonCSS.cellBorderColor ) ) 
+		end,
+		["appearance.borderTopLeft.cssID"] = ".borderTopLeft",
+		["appearance.caption.color"] = "#b3b3b3",
+		["appearance.caption.cssID"] = ".caption",
+		["appearance.contact.border-bottom"] = function()
+			return  nonCSS.showSectionBorder and string.format("1px dotted %s", AgColorToWebColor( nonCSS.sectionBorderColor ) ) or 'none' 
+		end,
+		["appearance.contact.cssID"] = "#stage, #stage2",
+		["appearance.contactInfo.cssID"] = "#liveUpdateContactInfo",
+		["appearance.detailText.color"] = "#000000",
+		["appearance.detailText.cssID"] = ".detailText",
+		["appearance.emptyThumbnail.background-color"] = function() return nonCSS.cellColor end,
+		["appearance.emptyThumbnail.cssID"] = ".emptyThumbnail",
+		["appearance.logo.cssID"] = ".logo",
+		["appearance.logo.display"] = false,
+		["appearance.pagination.cssID"] = ".paginationLinks, .pagination, #liveUpdatePagination",
+		["appearance.preview.border"] = function()
+			return nonCSS.showImageBorderLarge and string.format( "%dpx solid %s", nonCSS.imageBorderWidth, AgColorToWebColor( nonCSS.largeImageBorderColor ) ) or "none" 
+		end,
+		["appearance.preview.cssID"] = ".preview",
+		["appearance.previewFull.background-color"] = "#ffffff",
+		["appearance.previewFull.cssID"] = "#previewFull",
+		["appearance.previewFull.width"] = function()
+			return string.format( "%dpx", math.max( nonCSS.numCols * 160 + 2, ( nonCSS.showImageBorderLarge and nonCSS.imageBorderWidth * 2 or 0 ) + agmSizes.large.width + 30 ) ) 
+		end,
+		["appearance.liveUpdateImageSize.cssID"] = "#previewImage",
+		["appearance.liveUpdateImageSize.maxSize"] = function()
+			return agmSizes.large.width
+		end,
+		["appearance.siteTitle.cssID"] = "#liveUpdateSiteTitle",
+		["appearance.sitetitle.border-bottom"] = function()
+			return  nonCSS.showSectionBorder and string.format("1px dotted %s", AgColorToWebColor( nonCSS.sectionBorderColor ) ) or 'none' 
+		end,
+		["appearance.sitetitle.cssID"] = "#sitetitle",
+		["appearance.stage2.cssID"] = "#stage2",
+		["appearance.stage2.width"] = function()
+			return string.format( "%dpx", math.max( nonCSS.numCols * 161 + 1, ( nonCSS.showImageBorderLarge and nonCSS.imageBorderWidth * 2 or 0 ) + agmSizes.large.width + 30 ) ) 
+		end,
+		["appearance.stage.cssID"] = "#stage",
+		["appearance.stage.width"] = function()
+			return string.format( "%dpx", nonCSS.numCols * 161 + 1 ) 
+		end,
+		["appearance.textColor.color"] = "#000000",
+		["appearance.textColor.cssID"] = ".textColor",
+		["appearance.thumb.border"] = function()
+			return nonCSS.showImageBorderThumb and string.format( "1px solid %s", AgColorToWebColor( nonCSS.thumbBorderColor ) ) or "none" 
+		end,
+		["appearance.thumb.cssID"] = ".thumb",
+		["appearance.thumbnail.background-color"] = function() return nonCSS.cellColor end,
+		["appearance.thumbnail.cssID"] = ".thumbnail",
+		["appearance.thumbnailHover.background-color"] = function() return nonCSS.cellRolloverColor end,
+		["appearance.thumbnailHover.cssID"] = ".selectedThumbnail, .thumbnail:hover",
+		["appearance.wrapper_large.cssID"] = "#wrapper_large",
+		["appearance.wrapper_large.width"] = function()
+			return string.format( "%dpx", math.max( nonCSS.numCols * 161 + 1, ( nonCSS.showImageBorderLarge and nonCSS.imageBorderWidth * 2 or 0 ) + agmSizes.large.width + 30 ) ) 
+		end,
+		["appearance.wrapper_thumb.cssID"] = "#wrapper_thumb",
+		["appearance.wrapper_thumb.width"] = function()
+			return string.format( "%dpx", nonCSS.numCols * 161 + 1 ) 
+		end,
+		["lightroomApplication.identityPlateExport"] = "(main)",
+		["lightroomApplication.jpegQuality"] = 85,
+		["lightroomApplication.sizeBeingViewed"] = "thumb",
+		["lightroomApplication.useWatermark"] = false,
+		["metadata.groupDescription.value"] = LOC "$$$/AgWPG/Templates/HTML/DefaultValues/ExampleGroupDescription=",
+		["metadata.event.value"] = LOC "$$$/AgWPG/Templates/HTML/DefaultValues/ExampleEventName=bandXaargau 2010",
+		["metadata.clubName.value"] = LOC "$$$/AgWPG/Templates/HTML/DefaultValues/ExampleClubName=Club Name",
+		["metadata.date.value"] = LOC "$$$/AgWPG/Templates/HTML/DefaultValues/ExampleDate=dd. M&auml;rz 2010",
+
+		["metadata.homePage.value"] = {
+			value = "index.html",
+			metadata = { [ 'ag:dataType' ] = 'webLink' },
+		},
+		["nonCSS.cellBorderColor"] = "#787878",
+		["nonCSS.cellColor"] = "#949494",
+		["nonCSS.cellRolloverColor"] = "#a1a1a1",
+		["nonCSS.imageBase"] = "content",
+		["nonCSS.imageBorderWidth"] = 0,
+		["nonCSS.largeImageBorderColor"] = "#000000",
+		["nonCSS.numCols"] = 5,
+		["nonCSS.numRows"] = 4,
+		["nonCSS.sectionBorderColor"] = "#7F7F7F",
+		["nonCSS.showImageBorderLarge"] = false,
+		["nonCSS.showImageBorderThumb"] = false,
+		["nonCSS.showSectionBorder"] = true,
+		["nonCSS.showKuler"] = false,
+		["nonCSS.thumbBorderColor"] = "#000000",
+		["nonCSS.tracking"] = false,
+		["perImageSetting.description"] = {
+			enabled = true,
+			value = "{{com.adobe.caption}}",
+		},
+		["perImageSetting.title"] = {
+			enabled = true,
+			value = "{{com.adobe.title}}",
+		},
+		["perImageSetting.copyright"] = {
+			enabled = true,
+			value = "{{com.adobe.copyright}}",
+		},
+	},
+        properties = {
+                perImage = {
+                        {
+                                id = 'title',
+                                title = LOC "$$$/WPG/HTML/CSS/properties/ImageTitle=Title",
+                        },
+                        {
+                                id = 'description',
+                                title = LOC "$$$/WPG/HTML/CSS/properties/ImageCaption=Caption",
+                        },
+                        {
+                                id = 'copyright',
+                                title = LOC "$$$/WPG/HTML/CSS/properties/ImageCopyright=Copyright",
+                        },
+                },
+        },
+
+	iconicPreview = {
+		flashMovie = 'resources/flash_gallery_preview.swf',
+		flashvars = function()
+			local iconicData = {
+				foregroundColor = appearance.textColor.color,
+				showLogo = appearance.logo.display,
+				cellBorderColor = nonCSS.cellBorderColor,
+				cellRolloverColor = nonCSS.cellRolloverColor,
+				cellBackgroundColor = nonCSS.cellColor,
+				bodyBackgroundColor = appearance.body[ 'background-color' ],
+				numRows = nonCSS.numRows,
+				numCols = nonCSS.numCols,
+			}
+			return iconicData
+		end,
+	},
+	views = function( controller, f )
+		local LrView = import 'LrView'
+		local bind = LrView.bind
+		return { 
+
+		labels = WPGPanelUI.mainView {
+			bindToObject = controller,
+			WPGPanelUI.subdivided_sections {
+				WPGPanelUI.content_column {
+					WPGPanelUI.row {
+						f:static_text  {
+							title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/ClubNameTitle=Club Name",
+						},
+						f:mru_popup_view {
+							place_horizontal = 1,
+							place_vertical = 0.5,
+							boundEditValue = bind "metadata.clubName.value",
+							boundEditTracking = bind "metadata.clubName.tracking",
+							preferenceKey = "clubName"
+						},
+					},
+					WPGPanelUI.TextInput {
+						resize_to_fit_text_height = true,
+						maximumLength = 1600,
+						value = bind "metadata.clubName.value",
+						tracking = bind "metadata.clubName.tracking",
+						text_color=AgPanel.bright_text_color,
+					},
+					WPGPanelUI.row {
+						f:static_text  {
+							title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/DateTitle=Event Date",
+						},
+						f:mru_popup_view {
+							place_horizontal = 1,
+							place_vertical = 0.5,
+							boundEditValue = bind "metadata.date.value",
+							boundEditTracking = bind "metadata.date.tracking",
+							preferenceKey = "date"
+						},
+					},
+					WPGPanelUI.TextInput {
+						resize_to_fit_text_height = true,
+						maximumLength = 1600,
+						value = bind "metadata.date.value",
+						tracking = bind "metadata.date.tracking",
+						text_color=AgPanel.bright_text_color,
+					},
+				},
+				WPGPanelUI.content_column {
+					WPGPanelUI.row {
+						f:static_text  {
+							title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/GroupDescription=Collection Description",
+						},
+						f:mru_popup_view {
+							place_horizontal = 1,
+							place_vertical = 0.5,
+							boundEditValue = bind "metadata.groupDescription.value",
+							boundEditTracking = bind "metadata.groupDescription.tracking",
+							preferenceKey = "groupDescription"
+						},
+					},
+					WPGPanelUI.TextInput {
+						resize_to_fit_text_height = true,
+						maximumLength = 3200,
+						value = bind "metadata.groupDescription.value",
+						tracking = bind "metadata.groupDescription.tracking",
+						text_color=AgPanel.bright_text_color,
+					},
+				},
+			},
+		},
+		colorPalette = WPGPanelUI.mainView {
+			bindToObject = controller,
+			WPGPanelUI.subdivided_sections {
+				WPGPanelUI.color_content_column {
+					WPGPanelUI.label_and_color_row {
+						bindingValue = "appearance.textColor.color",
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/Colors/TextColor=Text",
+					},
+					WPGPanelUI.label_and_color_row {
+						bindingValue = "appearance.detailText.color",
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/Colors/DetailTextColor=Detail Text",
+					},
+				},
+				WPGPanelUI.color_content_column {
+					WPGPanelUI.label_and_color_row {
+						bindingValue = "appearance.body.background-color",
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/Colors/BackgroundColors=Background",
+					},
+					WPGPanelUI.label_and_color_row {
+						bindingValue = "appearance.previewFull.background-color",
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/Colors/DetailMatteColor=Detail Matte",
+					},
+				},
+				WPGPanelUI.color_content_column {
+					WPGPanelUI.label_and_color_row {
+						bindingValue = "nonCSS.cellColor",
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/Colors/CellsStatic=Cells",
+					},
+					WPGPanelUI.label_and_color_row {
+						bindingValue = "nonCSS.cellRolloverColor",
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/Colors/CellRollover=Rollover",
+					},
+					WPGPanelUI.label_and_color_row {
+						bindingValue = "nonCSS.cellBorderColor",
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/Colors/GridLines=Grid Lines",
+					},
+				},
+			},
+		},
+		appearanceConfiguration = WPGPanelUI.mainView {
+			bindToObject = controller,
+			WPGPanelUI.subdivided_sections {
+				WPGPanelUI.header_section_label {
+					title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/Appearance/Common=Common Settings",
+				},
+				WPGPanelUI.header_section {
+					WPGPanelUI.checkbox_and_color_row {
+						{
+							title = LOC( "$$$/AgWPG/Templates/HTML/Panel/Checkbox/SectionBorders=Section Borders" ),
+							bindingValue = [[nonCSS.showSectionBorder]],
+						},
+						{
+							bindingValue = [[nonCSS.sectionBorderColor]],
+						},
+					},
+				},
+			},
+			WPGPanelUI.subdivided_sections {
+				WPGPanelUI.header_section {
+					f:static_text  {
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/GridPages=Grid Pages",
+						place_vertical = 0.5,
+						margin_left = AgPanel.content_margin,
+					},
+					WPGPanelUI.warning_icon {
+						visibility = {
+							key = "lightroomApplication.sizeBeingViewed",
+							whenNotEqual = "thumb",
+						},
+					},
+				},
+				WPGPanelUI.content_column {
+					f:row_column_picker {
+						fill_horizontal = 1,
+						rows = bind "nonCSS.numRows",
+						columns = bind "nonCSS.numCols",
+						maxrows = 5,
+						maxcolumns = 8,
+						minrows = 3,
+						mincolumns = 3,
+						tooltip = LOC "$$$/AgWPG/Views/HTML/Panel/RowColumnPicker/InstructionText=Click anywhere in the grid to set dimensions.",
+						fill_horizontal=1,
+					},
+				},
+			},
+			WPGPanelUI.subdivided_sections {
+				WPGPanelUI.header_section {
+					f:static_text  {
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/ImagePages=Image Pages",
+						place_vertical = 0.5,
+						margin_left = AgPanel.content_margin,
+					},
+					WPGPanelUI.warning_icon {
+						visibility = {
+							key = "lightroomApplication.sizeBeingViewed",
+							whenNotEqual = "large",
+						},
+					},
+				},
+				WPGPanelUI.slider_content_column {
+					WPGPanelUI.slider_row {
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/MaximumImageSizeLabel/LargePreview=Size",
+						property = "agmSizes.large.width",
+						tracking = "nonCSS.tracking",
+						unit = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/ImageSizeUnit=px",
+						propMax = 2071,
+						propMin = 300,
+						width_in_digits = 4,
+						precision = 0,
+					},
+				},
+			},
+		},
+		outputSettings = WPGPanelUI.mainView {
+			bindToObject = controller,
+			WPGPanelUI.subdivided_sections {
+				WPGPanelUI.header_section_label {
+					title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/ImageHandling=Large Images",
+				},
+				WPGPanelUI.slider_content_column {
+					WPGPanelUI.slider_row {
+						title = LOC "$$$/AgWPG/Templates/HTML/Panel/Labels/MaximumImageSizeLabel/JPEGQualityLabel=Quality",
+						property = "lightroomApplication.jpegQuality",
+						tracking = "lightroomApplication.jpegQuality.tracking",
+						tracking_value = "qualityTracking",
+						unit = "",
+						propMax = 100,
+						propMin = 0,
+						width_in_digits = 4,
+						precision = 0,
+					},
+					WPGPanelUI.metadataModeControl {
+						bindingValue = "agmSizes.thumb.metadataExportMode",
+					},
+				},
+				WPGPanelUI.slider_content_column {
+					WPGPanelUI.checkbox_row {
+						title = LOC( "$$$/AgWPG/Templates/HTML/Panel/Checkbox/UseWatermark=Add Copyright Watermark" ),
+						bindingValue = [[lightroomApplication.useWatermark]],
+						indentWithSliders=true,
+					},
+				},
+			},
+		},
+	}
+	end,
+	
+	galleryOptions = { 
+		thumbnail = "resources/version_info.png",
+		galleryName = LOC "$$$/AgWPG/Templates/HTML/Title=Lightroom HTML Gallery",
+		galleryDescription = {
+			 LOC "$$$/AgWPG/Templates/HTML/Description=This HTML-driven web photo gallery is provided by Adobe with the first release of Lightroom^T.  Features include:",
+			[[]],
+			LOC "$$$/AgWPG/Templates/HTML/Description2=^U+0020^B Text Labeling",
+			LOC "$$$/AgWPG/Templates/HTML/Description4=^U+0020^B Layout and Color Controls",
+			LOC "$$$/AgWPG/Templates/HTML/Description5=^U+0020^B Two Viewing Levels",
+		},
+		galleryVersion = [[1.3]],
+	}
+}
