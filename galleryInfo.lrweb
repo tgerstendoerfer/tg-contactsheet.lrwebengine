@@ -397,17 +397,4 @@ return {
 		},
 	}
 	end,
-	
-	galleryOptions = { 
-		thumbnail = "resources/version_info.png",
-		galleryName = LOC "$$$/AgWPG/Templates/HTML/Title=Lightroom HTML Gallery",
-		galleryDescription = {
-			 LOC "$$$/AgWPG/Templates/HTML/Description=This HTML-driven web photo gallery is provided by Adobe with the first release of Lightroom^T.  Features include:",
-			[[]],
-			LOC "$$$/AgWPG/Templates/HTML/Description2=^U+0020^B Text Labeling",
-			LOC "$$$/AgWPG/Templates/HTML/Description4=^U+0020^B Layout and Color Controls",
-			LOC "$$$/AgWPG/Templates/HTML/Description5=^U+0020^B Two Viewing Levels",
-		},
-		galleryVersion = [[1.3]],
-	}
 }
